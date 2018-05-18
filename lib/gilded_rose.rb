@@ -14,11 +14,7 @@ class GildedRose
   end
 
   def modify_quality
-    not_increased_quality_item ? decrease_quality : increase_quality
-  end
-
-  def not_increased_quality_item
-    return @name != "Aged Brie" && @name != "Backstage passes to a TAFKAL80ETC concert" ? true : false
+    @name != "Aged Brie" && @name != "Backstage passes to a TAFKAL80ETC concert" ? decrease_quality : increase_quality
   end
 
   def decrease_quality
