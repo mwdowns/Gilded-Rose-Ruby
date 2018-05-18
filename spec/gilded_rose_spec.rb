@@ -51,20 +51,21 @@ RSpec.describe GildedRose do
   end
 
   context "increase_quality function check" do
+    
+    backstage_pass_greater_than_11 = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: 12, quality: 10)
+    backstage_pass_less_than_11 = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: 10, quality: 10)
+    backstage_pass_less_than_6 = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: 5, quality: 10)
+    really_aged_brie = GildedRose.new(name: "Aged Brie", days_remaining: 5, quality: 50)
+    
     it "Aged Brei" do
       aged_brie.increase_quality
       expect(aged_brie).to have_attributes(quality: 11)
     end
 
     it "Really Aged Brie" do
-      really_aged_brie = GildedRose.new(name: "Aged Brie", days_remaining: 5, quality: 50)
       really_aged_brie.increase_quality
       expect(really_aged_brie).to have_attributes(quality: 50)
     end
-
-    backstage_pass_greater_than_11 = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: 12, quality: 10)
-    backstage_pass_less_than_11 = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: 10, quality: 10)
-    backstage_pass_less_than_6 = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: 5, quality: 10)
 
     it "Long Before" do
       backstage_pass_greater_than_11.increase_quality
@@ -83,20 +84,22 @@ RSpec.describe GildedRose do
   end
 
   context "one_day_closer_to_death function check" do
+
+    normal_item_on_sell_by = GildedRose.new(name: "Normal Item", days_remaining: 0, quality: 10)
+    normal_item_after_sell_by = GildedRose.new(name: "Normal Item", days_remaining: -1, quality: 10)
+
     it "Normal Item" do
       normal_item.one_day_closer_to_death
       expect(normal_item).to have_attributes(days_remaining: 4)
     end
 
     it "Normal Item On Sell-By" do
-      normal_item_on_sell_by = GildedRose.new(name: "Normal Item", days_remaining: 0, quality: 10)
       expect(normal_item_on_sell_by).to receive(:past_sell_by_date)
       normal_item_on_sell_by.one_day_closer_to_death
       expect(normal_item_on_sell_by).to have_attributes(days_remaining: -1)
     end
 
     it "Normal Item After Sell-By" do
-      normal_item_after_sell_by = GildedRose.new(name: "Normal Item", days_remaining: -1, quality: 10)
       expect(normal_item_after_sell_by).to receive(:past_sell_by_date)
       normal_item_after_sell_by.one_day_closer_to_death
       expect(normal_item_after_sell_by).to have_attributes(days_remaining: -2)
@@ -229,32 +232,6 @@ RSpec.describe GildedRose do
       gilded_rose.tick
 
       expect(gilded_rose).to have_attributes(days_remaining: -11, quality: 50)
-    end
-  end
-
-  context "Sulfuras" do
-    it "before sell date" do
-      gilded_rose = GildedRose.new(name: "Sulfuras, Hand of Ragnaros", days_remaining: 5, quality: 80)
-
-      gilded_rose.tick
-
-      expect(gilded_rose).to have_attributes(days_remaining: 5, quality: 80)
-    end
-
-    it "on sell date" do
-      gilded_rose = GildedRose.new(name: "Sulfuras, Hand of Ragnaros", days_remaining: 0, quality: 80)
-
-      gilded_rose.tick
-
-      expect(gilded_rose).to have_attributes(days_remaining: 0, quality: 80)
-    end
-
-    it "after sell date" do
-      gilded_rose = GildedRose.new(name: "Sulfuras, Hand of Ragnaros", days_remaining: -10, quality: 80)
-
-      gilded_rose.tick
-
-      expect(gilded_rose).to have_attributes(days_remaining: -10, quality: 80)
     end
   end
 
