@@ -19,7 +19,7 @@ class GildedRose
 
   def decrease_quality
     if @quality > 0
-      @name == "Conjured Mana Cake" ? @quality = @quality -2 : @quality = @quality - 1
+      is_conjured_item ? @quality = @quality -2 : @quality = @quality - 1
     end
   end
 
@@ -46,9 +46,13 @@ class GildedRose
         @quality = @quality - @quality
       else
         if @quality > 0
-          @name == "Conjured Mana Cake" ? @quality = @quality - 2 : @quality = @quality - 1
+          is_conjured_item ? @quality = @quality - 2 : @quality = @quality - 1
         end
       end
+  end
+
+  def is_conjured_item
+    @name.split[0] == "Conjured" ? true : false
   end
 
 end
