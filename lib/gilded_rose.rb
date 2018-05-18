@@ -39,17 +39,16 @@ class GildedRose
   end
 
   def past_sell_by_date
-    if @name != "Aged Brie"
-      if @name != "Backstage passes to a TAFKAL80ETC concert"
+    case @name
+      when "Aged Brie"
+        @quality = @quality + 1 if @quality < 50
+      when "Backstage passes to a TAFKAL80ETC concert"
+        @quality = @quality - @quality
+      else
         if @quality > 0
           @name == "Conjured Mana Cake" ? @quality = @quality - 2 : @quality = @quality - 1
         end
-      else
-        @quality = @quality - @quality
       end
-    else
-      @quality = @quality + 1 if @quality < 50
-    end
   end
 
 end
