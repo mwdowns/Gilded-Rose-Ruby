@@ -9,12 +9,12 @@ RSpec.describe GildedRose do
   sulfuras = GildedRose.new(name: "Sulfuras, Hand of Ragnaros", days_remaining: 5, quality: 80)
   backstage_pass = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: 6, quality: 10)
 
-  # context "Sulfuras, Hand of Ragnaros" do
-  #   it "Sulfuras will return with no change" do
-  #     sulfuras.tick
-  #     expect(sulfuras).to be(nil)
-  #   end
-  # end
+  context "Sulfuras, Hand of Ragnaros" do
+    it "Sulfuras will return with no change" do
+      sulfuras.tick
+      expect(sulfuras).to be(sulfuras)
+    end
+  end
   
   context "modify_quality function check" do
     it "Normal Item" do
@@ -126,7 +126,7 @@ RSpec.describe GildedRose do
 
     it "Past Sell By Date Normal Item check" do 
       normal_item_psbd.past_sell_by_date
-      expect(normal_item).to have_attributes(quality: 9)
+      expect(normal_item_psbd).to have_attributes(quality: 9)
     end
   end
 
