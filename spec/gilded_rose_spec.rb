@@ -109,24 +109,34 @@ RSpec.describe GildedRose do
     conjured_item_psbd = GildedRose.new(name: "Conjured Mana Cake", days_remaining:-1, quality: 10)
     normal_item_psbd = GildedRose.new(name: "Sword of Pretty Good Power", days_remaining: -1, quality: 10)
 
-    it "Aged Brie check" do
+    it "Past Sell By Date Aged Brie check" do
       aged_brie_psbd.past_sell_by_date
       expect(aged_brie_psbd).to have_attributes(quality: 11)
     end
 
-    it "Backstage Pass check" do
+    it "Past Sell By Date Backstage Pass check" do
       backstage_pass_psbd.past_sell_by_date
       expect(backstage_pass_psbd).to have_attributes(quality: 0)
     end
 
-    it "Conjured Item check" do
+    it "Past Sell By Date Conjured Item check" do
       conjured_item_psbd.past_sell_by_date
       expect(conjured_item_psbd).to have_attributes(quality: 8)
     end
 
-    it "Normal Item check" do 
+    it "Past Sell By Date Normal Item check" do 
       normal_item_psbd.past_sell_by_date
       expect(normal_item).to have_attributes(quality: 9)
+    end
+  end
+
+  context "is_conjured_item function check" do
+    it "Conjured Item Returns True" do
+      expect(conjured_item.is_conjured_item).to be(true)
+    end
+
+    it "Normal Item Returns False" do
+      expect(normal_item.is_conjured_item).to be(false)
     end
   end
 
