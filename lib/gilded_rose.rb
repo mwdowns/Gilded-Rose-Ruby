@@ -7,59 +7,53 @@ class GildedRose
     @quality = quality
   end
 
-  def not_aged_brie
-    return @name != "Aged Brie" ? true : false
-  end
-
-  def not_backstage_pass
-    return @name != "Backstage passes to a TAFKAL80ETC concert" ? true : false
-  end
-
   def tick
-    if not_aged_brie and not_backstage_pass
-      if @quality > 0
-        if @name != "Sulfuras, Hand of Ragnaros"
-          if @name == "Conjured Mana Cake"
-            @quality = @quality -2
-          else
-            @quality = @quality - 1
-          end
-        end
-      end
-    else
-      if @quality < 50
-        @quality = @quality + 1
-        if @name == "Backstage passes to a TAFKAL80ETC concert"
-          if @days_remaining < 11
-            if @quality < 50
-              @quality = @quality + 1
-            end
-          end
-          if @days_remaining < 6
-            @quality = @quality + 1 if @quality < 50
-          end
-        end
-      end
+    return if @name == "Sulfuras, Hand of Ragnaros"
+    modify_quality
+    one_day_closer_to_death
+  end
+
+  def modify_quality
+    not_increased_quality_item ? decrease_quality : increase_quality
+  end
+
+  def not_increased_quality_item
+    return @name != "Aged Brie" && @name != "Backstage passes to a TAFKAL80ETC concert" ? true : false
+  end
+
+  def decrease_quality
+    if @quality > 0
+      @name == "Conjured Mana Cake" ? @quality = @quality -2 : @quality = @quality - 1
     end
-    @days_remaining = @days_remaining - 1 if @name != "Sulfuras, Hand of Ragnaros"
+  end
+
+  def increase_quality
+    @quality = @quality + 1 if @quality < 50
+    if @name == "Backstage passes to a TAFKAL80ETC concert"
+      @quality = @quality + 1 if @days_remaining < 11 && @quality < 50
+      @quality = @quality + 1 if @days_remaining < 6 && @quality < 50
+    end
+  end
+
+  def one_day_closer_to_death
+    @days_remaining = @days_remaining - 1
     if @days_remaining < 0
-      if @name != "Aged Brie"
-        if @name != "Backstage passes to a TAFKAL80ETC concert"
-          if @quality > 0
-            if @name != "Sulfuras, Hand of Ragnaros"
-              if @name == "Conjured Mana Cake"
-                @quality = @quality - 2
-              else
-                @quality = @quality - 1
-              end
-            end
-          end
-        else
-          @quality = @quality - @quality
+      past_sell_by_date
+    end
+  end
+
+  def past_sell_by_date
+    if @name != "Aged Brie"
+      if @name != "Backstage passes to a TAFKAL80ETC concert"
+        if @quality > 0
+          @name == "Conjured Mana Cake" ? @quality = @quality - 2 : @quality = @quality - 1
         end
       else
-        @quality = @quality + 1 if @quality < 50
+        @quality = @quality - @quality
       end
+    else
+      @quality = @quality + 1 if @quality < 50
     end
   end
+
 end
