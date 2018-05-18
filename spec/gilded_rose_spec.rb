@@ -82,7 +82,7 @@ RSpec.describe GildedRose do
     end
   end
 
-  context "one_day_closer_to_death" do
+  context "one_day_closer_to_death function check" do
     it "Normal Item" do
       normal_item.one_day_closer_to_death
       expect(normal_item).to have_attributes(days_remaining: 4)
@@ -100,6 +100,33 @@ RSpec.describe GildedRose do
       expect(normal_item_after_sell_by).to receive(:past_sell_by_date)
       normal_item_after_sell_by.one_day_closer_to_death
       expect(normal_item_after_sell_by).to have_attributes(days_remaining: -2)
+    end
+  end
+
+  context "past_sell_by_date function check" do
+    aged_brie_psbd = GildedRose.new(name: "Aged Brie", days_remaining: -10, quality: 10)
+    backstage_pass_psbd = GildedRose.new(name: "Backstage passes to a TAFKAL80ETC concert", days_remaining: -1, quality: 10)
+    conjured_item_psbd = GildedRose.new(name: "Conjured Mana Cake", days_remaining:-1, quality: 10)
+    normal_item_psbd = GildedRose.new(name: "Sword of Pretty Good Power", days_remaining: -1, quality: 10)
+
+    it "Aged Brie check" do
+      aged_brie_psbd.past_sell_by_date
+      expect(aged_brie_psbd).to have_attributes(quality: 11)
+    end
+
+    it "Backstage Pass check" do
+      backstage_pass_psbd.past_sell_by_date
+      expect(backstage_pass_psbd).to have_attributes(quality: 0)
+    end
+
+    it "Conjured Item check" do
+      conjured_item_psbd.past_sell_by_date
+      expect(conjured_item_psbd).to have_attributes(quality: 8)
+    end
+
+    it "Normal Item check" do 
+      normal_item_psbd.past_sell_by_date
+      expect(normal_item).to have_attributes(quality: 9)
     end
   end
 
