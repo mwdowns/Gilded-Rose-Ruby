@@ -5,16 +5,18 @@ class GildedRose
     @name = name
     @days_remaining = days_remaining
     @quality = quality
+    @epic_items = ["Sulfuras, Hand of Ragnaros"]
+    @special_items = ["Aged Brie", "Backstage passes to a TAFKAL80ETC concert"]
   end
 
   def tick
-    return if @name == "Sulfuras, Hand of Ragnaros"
+    return if @epic_items.include?(@name)
     modify_quality
     one_day_closer_to_death
   end
 
   def modify_quality
-    @name != "Aged Brie" && @name != "Backstage passes to a TAFKAL80ETC concert" ? decrease_quality : increase_quality
+    @special_items.include?(@name) ? increase_quality : decrease_quality
   end
 
   def decrease_quality
