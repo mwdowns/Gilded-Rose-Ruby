@@ -34,7 +34,7 @@ class GildedRose
   end
 
   def one_day_closer_to_death
-    @days_remaining = @days_remaining - 1
+    @days_remaining -= 1
     if @days_remaining < 0
       past_sell_by_date
     end
@@ -45,7 +45,7 @@ class GildedRose
       when "Aged Brie"
         add_one if @quality < 50
       when "Backstage passes to a TAFKAL80ETC concert"
-        @quality = @quality - @quality
+        @quality = 0
       else
         if @quality > 0
           is_conjured_item ? minus_two : minus_one
@@ -58,15 +58,15 @@ class GildedRose
   end
 
   def minus_two
-    @quality = @quality - 2
+    @quality -= 2
   end
 
   def minus_one
-    @quality = @quality - 1
+    @quality -= 1
   end
 
   def add_one
-    @quality = @quality + 1
+    @quality += 1
   end
 
 end

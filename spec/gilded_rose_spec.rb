@@ -150,20 +150,22 @@ RSpec.describe GildedRose do
     end
 
     context "add and minus function checks" do
-      item = GildedRose.new(name: "Normal Item", days_remaining: 5, quality: 10)
       it "minus_two function returns quality minus two" do
+        item = GildedRose.new(name: "Blah item", days_remaining: 5, quality: 10)
         item.minus_two
         expect(item).to have_attributes(quality: 8)
       end
       
-      it "minus_on function returns quality minus one" do
+      it "minus_one function returns quality minus one" do
+        item = GildedRose.new(name: "Blah item", days_remaining: 5, quality: 10)
         item.minus_one
-        expect(item).to have_attributes(quality: 7)
+        expect(item).to have_attributes(quality: 9)
       end
 
       it "add_one function returns quality plus one" do
+        item = GildedRose.new(name: "Blah item", days_remaining: 5, quality: 10)
         item.add_one
-        expect(item).to have_attributes(quality: 8)
+        expect(item).to have_attributes(quality: 11)
       end 
     end
   end
