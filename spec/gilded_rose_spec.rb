@@ -22,6 +22,12 @@ RSpec.describe GildedRose do
         normal_item.tick
       end
 
+      it "Item with -1 days remaining will call past_sell_by_date function" do
+        zero_days_item = GildedRose.new(name: "Self Cleaning Tissue", days_remaining: -1, quality: 10)
+        expect(zero_days_item).to receive(:past_sell_by_date)
+        zero_days_item.tick
+      end
+
     end
     
     context "modify_quality function check" do
@@ -97,18 +103,6 @@ RSpec.describe GildedRose do
       it "Normal Item" do
         normal_item.one_day_closer_to_death
         expect(normal_item).to have_attributes(days_remaining: 4)
-      end
-
-      it "Normal Item On Sell-By" do
-        expect(normal_item_on_sell_by).to receive(:past_sell_by_date)
-        normal_item_on_sell_by.one_day_closer_to_death
-        expect(normal_item_on_sell_by).to have_attributes(days_remaining: -1)
-      end
-
-      it "Normal Item After Sell-By" do
-        expect(normal_item_after_sell_by).to receive(:past_sell_by_date)
-        normal_item_after_sell_by.one_day_closer_to_death
-        expect(normal_item_after_sell_by).to have_attributes(days_remaining: -2)
       end
     end
 

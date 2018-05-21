@@ -13,6 +13,7 @@ class GildedRose
     return if @epic_items.include?(@name)
     modify_quality
     one_day_closer_to_death
+    past_sell_by_date if @days_remaining < 0
   end
 
   def modify_quality
@@ -35,9 +36,6 @@ class GildedRose
 
   def one_day_closer_to_death
     @days_remaining -= 1
-    if @days_remaining < 0
-      past_sell_by_date
-    end
   end
 
   def past_sell_by_date
